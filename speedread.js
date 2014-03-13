@@ -1,18 +1,17 @@
 (function ($) {
-  var data = [];
-  var wpm = 500;
-  var speed = 1000 / (wpm /60);
-  var i = 0;
-
-  $.fn.speedRead = function(target) {
-    var text = $(target).text();
+  $.fn.speedRead = function(target, options) {
     var reader = this;
-    data = text.split(" ");
+    var text = $(target).text();
+    var data = text.split(" ");
+    var settings = $.extend({
+      wpm: 250
+    }, options );
+    var speed = 60000 / settings.wpm;
+    var i = 0;
     
     var updateReader = function() {
       $(reader).text(data[i]);
-      i++;
-      if(i < data.length) {
+      if(i++ < data.length) {
         setTimeout(function() {
           updateReader();
         }, speed);
